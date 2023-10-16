@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"net"
-	"os"
 )
 
 func main() {
@@ -22,17 +20,24 @@ func main() {
 	println("user was connected")
 	defer conn.Close()
 	for {
-		data := make([]byte, 1024)
-		_, err := conn.Read(data)
+		resp := NewResp(conn)
+		val, err := resp.Read()
 		if err != nil {
-			if err == io.EOF {
-				fmt.Println("user was disconected")
-				break
-			}
-			fmt.Println("can not get property input from user")
-			os.Exit(0)
+			fmt.Println("error")
 		}
+		fmt.Println(val)
 		conn.Write([]byte("+OK\r\n"))
+		// data := make([]byte, 1024)
+		// _, err := conn.Read(data)
+		// if err != nil {
+		// 	if err == io.EOF {
+		// 		fmt.Println("user was disconected")
+		// 		break
+		// 	}
+		// 	fmt.Println("can not get property input from user")
+		// 	os.Exit(0)
+		// }
+		// conn.Write([]byte("+OK\r\n"))
 	}
 
 }
