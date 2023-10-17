@@ -176,8 +176,6 @@ func (v Value) marshalArray() []byte {
 		bytes = append(bytes, v.array[i].Marshal()...)
 	}
 
-	bytes = append(bytes, '\r', '\n')
-
 	return bytes
 
 }
